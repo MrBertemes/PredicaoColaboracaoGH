@@ -10,22 +10,10 @@ G = nx.read_gexf("grafoFinal.gexf")
 # Lista de nós que representam "egressos" no grafo
 egressos = [n for n in G.nodes() if G.nodes[n].get("tipo") == "egresso"]
 
-# Função para calcular múltiplas features
 def generate_features(egresso, v):
     # Número de vizinhos em comum
     common_neigh = len(list(nx.common_neighbors(G, egresso, v)))
-    # Coeficiente de aglomeração do "egresso" e do nó v
-    clustering_egresso = nx.clustering(G, egresso)
-    clustering_v = nx.clustering(G, v)
-    # Distância geodésica (ou -1 se não estiver conectado)
-    try:
-        shortest_path = nx.shortest_path_length(G, egresso, v)
-    except nx.NetworkXNoPath:
-        shortest_path = -1
-    # Grau dos nós
-    degree_egresso = G.degree(egresso)
-    degree_v = G.degree(v)
-    return [common_neigh, clustering_egresso, clustering_v, shortest_path, degree_egresso, degree_v]
+    return [common_neigh]
 
 # Lista para armazenar os resultados
 resultados = []
